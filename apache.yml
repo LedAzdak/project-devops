@@ -1,23 +1,4 @@
 ---
-- name: deploy apache sous ubuntu
-  hosts: webservers
-  become: true
-  tasks:
-  - name: Installing Apache2 on WebServers
-    ansible.builtin.apt:
-      name: apache2
-      state: latest
-      update_cache: true
-  - name: Make sure a service is running
-    ansible.builtin.systemd:
-      state: started
-      name: apache2
-  - name: Copy index.html
-    ansible.builtin.copy:
-      src: /tmp/index.html
-      dest: /var/www/html/
-
----
 - name: Deploy webapp on tomcat
   hosts: webservers
   become: true
