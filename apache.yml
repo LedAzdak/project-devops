@@ -1,0 +1,36 @@
+---
+- name: deploy apache sous ubuntu
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Installing Apache2 on WebServers
+    ansible.builtin.apt:
+      name: apache2
+      state: latest
+      update_cache: true
+  - name: Make sure a service is running
+    ansible.builtin.systemd:
+      state: started
+      name: apache2
+  - name: Copy index.html
+    ansible.builtin.copy:
+      src: /tmp/index.html
+      dest: /var/www/html/
+
+---
+- name: Deploy webapp on tomcat
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Delete webapp diretory
+    ansible.builtin.file:
+      path: /opt/tomcat8/webapps/project-devops
+      state: absent
+  - name: Dete .war file
+    ansible.builtin.file:
+      path: /opt/tomcat/webapps/project-devops.war
+      state: absent
+  - name: Copy .war file from master to destination
+    ansible.builtin.copy:
+      src: /target/project-devops.war
+      dest: /opt/tomcat8/webapps/project-devops.war 
