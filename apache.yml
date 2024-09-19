@@ -9,9 +9,9 @@
       state: absent
   - name: Dete .war file
     ansible.builtin.file:
-      path: /opt/tomcat/webapps/project-devops.war
+      path: /opt/tomcat8/webapps/project-devops.war
       state: absent
   - name: Copy .war file from master to destination
     ansible.builtin.copy:
-      src: /target/project-devops.war
+      src: target/project-devops.war
       dest: /opt/tomcat8/webapps/project-devops.war 
